@@ -13,7 +13,8 @@ class PostsController < ApplicationController
             @sub ||= @post.primary_sub
             redirect_to(sub_post_url(@sub, @post))  
         else
-            redirect_to(subs_url)
+            render json: @post.errors.full_messages
+            # redirect_to(subs_url)
         end
     end
 
@@ -43,6 +44,6 @@ class PostsController < ApplicationController
 
     private
     def post_params
-        params.require(:post).permit(:title, :url, :content)
+        params.require(:post).permit(:title, :url, :content, cross_posted_sub_ids: [])
     end
 end

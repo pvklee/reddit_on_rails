@@ -13,8 +13,9 @@
 
 <section>
     <% @sub.all_posts.each do |post| %>
+        <% xpost = (post.primary_sub_id == @sub.id ? '' : '[x-post: ' + post.primary_sub.title + ']')%>
         <section>
-            <h3><a href="<%=sub_post_path(@sub, post)%>"><%=post.title%></a></h3>
+            <h3><a href="<%=sub_post_path(@sub, post)%>"><%=xpost%><%=post.title%></a></h3>
             <p><%=post.author.username%></p>
         </section>
     <% end %>

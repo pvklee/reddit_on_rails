@@ -4,9 +4,11 @@ class Sub < ApplicationRecord
 
     belongs_to :moderator, class_name: 'User', foreign_key: :moderator_id
     has_many :sub_posts, class_name: 'Post', foreign_key: :primary_sub_id
-    # has_many :cross_posts, class_name: 'Post', foreign_key: :
+    has_many :crosspost_sub_associations, class_name: 'PostSub', inverse_of: :sub
+
+    has_many :cross_posts, through: :crosspost_sub_associations, source: :post
 
     def all_posts
-        (sub_posts.all).uniq
+        (cross_posts.all + sub_posts.all).uniq
     end
 end

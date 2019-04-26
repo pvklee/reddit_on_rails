@@ -20,5 +20,16 @@
     </label>
     <br>
 
+    <% Sub.all.where.not(id: @sub.id).each do |cross_posted_sub| %>
+        <label><%= cross_posted_sub.title %>
+        <input
+            type="checkbox"
+            value="<%= cross_posted_sub.id %>"
+            name="post[cross_posted_sub_ids][]"
+            <%= "checked" if @post.cross_posted_sub_ids.include?(cross_posted_sub.id) %>
+        />
+        </label>
+    <% end %>
+    
     <input type="submit" value="<%=button_msg%>">
 </form>
