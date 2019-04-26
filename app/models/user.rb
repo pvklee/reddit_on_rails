@@ -9,6 +9,7 @@ class User < ApplicationRecord
 
     has_many :created_subs, class_name: 'Sub', foreign_key: :moderator_id
     has_many :authored_posts, class_name: 'Post', foreign_key: :author_id
+    has_many :authored_comments, class_name: 'Comment', foreign_key: :author_id
     
 
     def password=(password)

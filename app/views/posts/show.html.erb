@@ -1,12 +1,30 @@
 <h1><%=@post.title%></h1>
+<%=render 'vote_buttons', post: @post, votes_count: @post.votes_count%>
 <ul>
     <li>Created by: <%=@post.author.username%></li>
     <li>Content: <%=@post.content%></li>
 </ul>
 
 <section>
-    <form action="<%=sub_path(@sub)%>" method="get">
-        <input type="submit" value="Back to <%=@sub.title%>">
+    <h3>comments</h3>
+        <form action="<%=post_comments_path(@post)%>" method="post">
+            <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+            <textarea id="comment_content" name="comment[content]"></textarea>
+            <input type="submit" value="Comment">
+        </form>
+    <ul>
+        <% comments_by_parent = @post.comments_by_parent %>
+        <% comments_by_parent[nil].each do |top_level_comment| %>
+            <li><%=render 'comments/comment',
+                comments_by_parent: comments_by_parent,
+                comment: top_level_comment%></li>
+        <%end%>
+    </ul>
+</section>
+
+<section>
+    <form action="<%=sub_path(@post.primary_sub)%>" method="get">
+        <input type="submit" value="Back to <%=@post.primary_sub.title%>">
     </form>
 </section>
 

@@ -7,5 +7,17 @@ Rails.application.routes.draw do
   resources :subs do
     resources :posts
   end
-  resources :posts
+  resources :posts do
+    resources :comments
+    member do
+      post 'upvote'
+      post 'downvote'
+    end
+  end
+  resources :comments do
+    member do
+      post 'upvote'
+      post 'downvote'
+    end
+  end
 end

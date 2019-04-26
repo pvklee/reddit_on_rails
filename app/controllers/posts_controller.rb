@@ -34,7 +34,6 @@ class PostsController < ApplicationController
     end
 
     def show
-        @sub = Sub.find(params[:sub_id])
         @post = Post.find(params[:id])
     end
 
@@ -42,8 +41,27 @@ class PostsController < ApplicationController
         @posts = Post.all
     end
 
+    def upvote
+        cast_vote(1)
+    end
+
+    def downvote
+        cast_vote(-1)
+    end
+    
     private
     def post_params
         params.require(:post).permit(:title, :url, :content, cross_posted_sub_ids: [])
+    end
+
+    def cast_vote(direction)
+        @post = Post.find(params[:id])
+        @vote = @post.votes.find_or_initialize_by(user: current_user)
+    
+        unless @vote.update(value: direction)
+          flash[:errors] = @vote.errors.full_messages
+        end
+    
+        redirect_back(fallback_location: post_url(@post))
     end
 end

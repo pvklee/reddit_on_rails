@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_26_040053) do
+ActiveRecord::Schema.define(version: 2019_04_26_084946) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content", null: false
+    t.integer "author_id", null: false
+    t.integer "post_id", null: false
+    t.integer "parent_comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_comments_on_author_id"
+    t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
+  end
 
   create_table "post_subs", force: :cascade do |t|
     t.integer "post_id", null: false
@@ -56,6 +68,16 @@ ActiveRecord::Schema.define(version: 2019_04_26_040053) do
     t.datetime "updated_at", null: false
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "votable_id", null: false
+    t.string "votable_type", null: false
+    t.integer "user_id", null: false
+    t.integer "value", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "votable_id", "votable_type"], name: "index_votes_on_user_id_and_votable_id_and_votable_type", unique: true
   end
 
 end
