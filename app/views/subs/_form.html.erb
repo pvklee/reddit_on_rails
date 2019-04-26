@@ -1,0 +1,19 @@
+<% form_action = (form_method == 'post' ? subs_path : sub_path(sub)) %>
+<% button_msg = (form_method == 'post' ? 'Create Sub' : 'Edit Sub') %>
+
+<form action="<%= form_action %>" method="post">
+    <input type="hidden" name="_method" value="<%=form_method%>">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    
+    <label>Title:
+        <input id="title" name="sub[title]" type="text" value="<%= sub.title%>">
+    </label>
+    <br>
+
+    <label>Description:
+        <textarea id="description" name="sub[description]"><%= sub.description%></textarea>
+    </label>
+    <br>
+
+    <input type="submit" value="<%=button_msg%>">
+</form>

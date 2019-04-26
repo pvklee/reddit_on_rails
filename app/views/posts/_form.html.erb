@@ -1,0 +1,24 @@
+<% form_action = (form_method == 'post' ? sub_posts_path(@sub) : sub_post_path(sub)) %>
+<% button_msg = (form_method == 'post' ? 'Create Post' : 'Edit Post') %>
+
+<form action="<%= form_action %>" method="post">
+    <input type="hidden" name="_method" value="<%=form_method%>">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+    
+    <label>Title:
+        <input id="title" name="post[title]" type="text" value="<%= post.title%>">
+    </label>
+    <br>
+
+    <label>URL:
+        <input id="url" name="post[url]" type="text" value="<%= post.url%>">
+    </label>
+    <br>
+
+    <label>Content:
+        <textarea id="content" name="post[content]"><%= post.content%></textarea>
+    </label>
+    <br>
+
+    <input type="submit" value="<%=button_msg%>">
+</form>

@@ -1,0 +1,17 @@
+<h1><%=@post.title%></h1>
+<ul>
+    <li>Created by: <%=@post.author.username%></li>
+    <li>Content: <%=@post.content%></li>
+</ul>
+
+<section>
+    <form action="<%=sub_path(@sub)%>" method="get">
+        <input type="submit" value="Back to <%=@sub.title%>">
+    </form>
+</section>
+
+<section>
+    <form action="<%=subs_path%>" method="get">
+        <input type="submit" value="All Subs">
+    </form>
+</section>

@@ -1,0 +1,21 @@
+<h1>All users</h1>
+<ul>
+    <% User.all.each do |user| %>
+        <li><%=user.username%></li>
+    <%end%>
+    current user is <%=current_user ? current_user.username : 'n/a'%>
+
+    <form action="<%=session_path%>" method="post">
+        <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+        <input name="_method" type="hidden" value="delete">
+        <input type="submit" value="log out">
+    </form>
+
+    <form action="<%=new_session_path%>" method="get">
+        <input type="submit" value="log in">
+    </form>
+
+    <form action="<%=new_user_path%>" method="get">
+        <input type="submit" value="create user">
+    </form>
+</ul>
